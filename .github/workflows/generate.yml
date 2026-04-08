@@ -31,7 +31,9 @@ jobs:
 
       - name: Generate article
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
+          DASHSCOPE_API_URL: ${{ secrets.DASHSCOPE_API_URL }}
+          DASHSCOPE_MODEL_GENERATE: ${{ secrets.DASHSCOPE_MODEL_GENERATE }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           CONTENT_URL: ${{ inputs.url }}
         run: |

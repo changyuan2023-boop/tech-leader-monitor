@@ -1,8 +1,8 @@
-"""Article generation using Claude Sonnet."""
+"""Article generation using Aliyun DashScope API."""
 
 import logging
 import os
-from anthropic import Anthropic
+from openai import OpenAI
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +23,18 @@ async def generate_article(
     Returns:
         Generated article markdown or None if failed
     """
-    api_key = os.getenv("ANTHROPIC_API_KEY")
+    api_key = os.getenv("DASHSCOPE_API_KEY")
     if not api_key:
-        logger.error("ANTHROPIC_API_KEY not set")
+        logger.error("DASHSCOPE_API_KEY not set")
         return None
 
-    client = Anthropic()
+    api_url = os.getenv("DASHSCOPE_API_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
+    model = os.getenv("DASHSCOPE_MODEL_GENERATE", "qwen-max")
+
+    client = OpenAI(
+        api_key=api_key,
+        base_url=api_url
+    )
 
     prompt = f"""Generate a 2000-4000 word Chinese financial news article based on the following source content.
 
@@ -54,15 +60,15 @@ async def generate_article(
 Please generate the article in Markdown format."""
 
     try:
-        message = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+        message = client.chat.completions.create(
+            model=model,
             max_tokens=4000,
             messages=[
                 {"role": "user", "content": prompt}
             ]
         )
 
-        article = message.content[0].text
+        article = message.choices[0].message.content
         logger.info(f"Generated article for {person_name}")
         return article
 

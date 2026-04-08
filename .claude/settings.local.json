@@ -8,7 +8,9 @@
       "Bash(python3 -m pip install -q anthropic)",
       "Bash(python3 test_full_monitor.py)",
       "Bash(python3 test_slack.py)",
-      "Bash(python3 test_dedup.py)"
+      "Bash(python3 test_dedup.py)",
+      "WebFetch(domain:dashscope.aliyuncs.com)",
+      "WebSearch"
     ]
   }
 }

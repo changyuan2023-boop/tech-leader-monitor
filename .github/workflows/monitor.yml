@@ -29,7 +29,9 @@ jobs:
 
       - name: Run monitor
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
+          DASHSCOPE_API_URL: ${{ secrets.DASHSCOPE_API_URL }}
+          DASHSCOPE_MODEL_CLASSIFY: ${{ secrets.DASHSCOPE_MODEL_CLASSIFY }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |

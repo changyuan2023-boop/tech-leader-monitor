@@ -1,8 +1,9 @@
-"""Content relevance classification using Claude Haiku."""
+"""Content relevance classification using Aliyun DashScope API."""
 
 import logging
 import os
-from anthropic import Anthropic
+import json
+from openai import OpenAI
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +24,18 @@ async def classify_relevance(
     Returns:
         Dict with is_relevant (bool) and reason
     """
-    api_key = os.getenv("ANTHROPIC_API_KEY")
+    api_key = os.getenv("DASHSCOPE_API_KEY")
     if not api_key:
-        logger.error("ANTHROPIC_API_KEY not set")
+        logger.error("DASHSCOPE_API_KEY not set")
         return {"is_relevant": False, "reason": "API key not set"}
 
-    client = Anthropic()
+    api_url = os.getenv("DASHSCOPE_API_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
+    model = os.getenv("DASHSCOPE_MODEL_CLASSIFY", "qwen-plus")
+
+    client = OpenAI(
+        api_key=api_key,
+        base_url=api_url
+    )
 
     prompt = f"""Judge if this content is a first-hand statement (speech, interview, blog post, opinion piece)
 by {person_name}, not just a news article mentioning them.
@@ -41,17 +48,16 @@ Respond with JSON:
 {{"is_relevant": true/false, "reason": "brief reason"}}"""
 
     try:
-        message = client.messages.create(
-            model="claude-3-5-haiku-20241022",
+        message = client.chat.completions.create(
+            model=model,
             max_tokens=100,
             messages=[
                 {"role": "user", "content": prompt}
             ]
         )
 
-        response_text = message.content[0].text
+        response_text = message.choices[0].message.content
         # Parse JSON response
-        import json
         result = json.loads(response_text)
         return result
 
