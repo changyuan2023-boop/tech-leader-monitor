@@ -6,6 +6,9 @@ on:
     - cron: '0 20 * * *' # 20:00 UTC daily
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   monitor:
     runs-on: ubuntu-latest
