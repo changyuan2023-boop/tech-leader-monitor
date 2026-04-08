@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pip install -q feedparser)",
+      "Bash(python test_monitor.py)",
+      "Bash(python3 -m pip install -q feedparser pyyaml anthropic requests)",
+      "Bash(python3 test_monitor.py)",
+      "Bash(python3 -m pip install -q anthropic)",
+      "Bash(python3 test_full_monitor.py)",
+      "Bash(python3 test_slack.py)",
+      "Bash(python3 test_dedup.py)"
+    ]
+  }
+}

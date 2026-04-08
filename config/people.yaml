@@ -1,0 +1,60 @@
+people:
+  - name: "Elon Musk"
+    sources:
+      rss:
+        - "https://xai.com/feed"
+        - "https://www.tesla.com/blog/feed"
+        - "https://www.spacex.com/feed"
+      youtube:
+        - "Tesla"
+        - "SpaceX"
+      google_news_query: '"Elon Musk" (interview OR speech OR podcast OR opinion)'
+
+  - name: "Jensen Huang"
+    sources:
+      rss:
+        - "https://blogs.nvidia.com/feed"
+      youtube:
+        - "NVIDIA"
+      google_news_query: '"Jensen Huang" (interview OR speech OR podcast OR opinion)'
+
+  - name: "Warren Buffett"
+    sources:
+      rss:
+        - "https://www.berkshirehathaway.com/feed"
+      youtube:
+        - "Berkshire Hathaway"
+      google_news_query: '"Warren Buffett" (interview OR speech OR opinion OR letter)'
+
+  - name: "Lisa Su"
+    sources:
+      rss:
+        - "https://www.amd.com/en/newsroom/feed"
+      youtube:
+        - "AMD"
+      google_news_query: '"Lisa Su" (interview OR speech OR podcast OR opinion)'
+
+  - name: "Sam Altman"
+    sources:
+      rss:
+        - "https://blog.samaltman.com/feed"
+      youtube:
+        - "OpenAI"
+      google_news_query: '"Sam Altman" (interview OR speech OR podcast OR opinion)'
+
+  - name: "Jeff Bezos"
+    sources:
+      rss:
+        - "https://www.bluorigin.com/feed"
+      youtube:
+        - "Blue Origin"
+      google_news_query: '"Jeff Bezos" (interview OR speech OR opinion OR letter)'
+
+  - name: "Ray Dalio"
+    sources:
+      rss:
+        - "https://www.linkedin.com/in/raydalio/posts/feed"
+      youtube:
+        - "Ray Dalio"
+        - "Bridgewater Associates"
+      google_news_query: '"Ray Dalio" (interview OR speech OR opinion OR principle)'
