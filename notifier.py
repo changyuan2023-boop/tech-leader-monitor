@@ -37,68 +37,25 @@ async def send_slack_notification(
     repo_name = os.getenv("GITHUB_REPOSITORY", "user/repo")
     generate_url = f"{repo_url}/{repo_name}/actions/workflows/generate.yml"
 
+    # Build notification text content
+    notification_text = f"""🎙 新内容发现
+
+人物：{person_name}
+类型：{content_type}
+标题：{title}
+来源：{source}
+链接：{url}
+
+👉 点此生成中文资讯：{generate_url}"""
+
+    # Format message according to custom webhook schema
     message = {
-        "text": f"🎙 New Content: {person_name}",
-        "blocks": [
-            {
-                "type": "header",
-                "text": {
-                    "type": "plain_text",
-                    "text": "🎙 New Content Found",
-                }
-            },
-            {
-                "type": "section",
-                "fields": [
-                    {
-                        "type": "mrkdwn",
-                        "text": f"*Person:*\n{person_name}"
-                    },
-                    {
-                        "type": "mrkdwn",
-                        "text": f"*Type:*\n{content_type}"
-                    },
-                    {
-                        "type": "mrkdwn",
-                        "text": f"*Source:*\n{source}"
-                    },
-                ]
-            },
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"*Title:*\n{title}"
-                }
-            },
-            {
-                "type": "actions",
-                "elements": [
-                    {
-                        "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "View Content"
-                        },
-                        "url": url,
-                        "style": "primary"
-                    },
-                    {
-                        "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Generate Article"
-                        },
-                        "url": generate_url,
-                        "style": "danger"
-                    }
-                ]
-            }
-        ]
+        "tech_leader_monitor": notification_text
     }
 
     try:
-        response = requests.post(webhook_url, json=message, timeout=10)
+        response = requests.post(webhook_url, json=message, timeout=10,
+                                headers={"Content-Type": "application/json"})
         response.raise_for_status()
         logger.info(f"Sent Slack notification for {person_name}: {title}")
         return True
